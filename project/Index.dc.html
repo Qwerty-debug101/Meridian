@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family:'Schibsted Grotesk',system-ui,sans-serif; background:#0e0e12; }
+  :root{ --bg:#0e0e12; --surface:#17171d; --surface-2:#1e1e26; --border:#2a2a34; --border-strong:#3a3a47; --text:#f4f4f7; --text-2:#a6a6b4; --text-3:#6f6f7e; --accent:#7d7dff; --accent-soft:#1d1d3a; --success:#34c585; --warning:#e0a13a; --mono:'JetBrains Mono',monospace; }
+  [data-lucide]{ width:1em; height:1em; }
+  a{ text-decoration:none; color:inherit; }
+  .card:hover{ border-color:var(--accent); }
+</style>
+</helmet>
+<div style="background:radial-gradient(1200px 600px at 70% -10%, #1d1d3a 0%, #0e0e12 55%); color:var(--text); min-height:100vh;">
+  <div style="max-width:1080px; margin:0 auto; padding:64px 40px 96px;">
+
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:36px;">
+      <div style="width:44px; height:44px; border-radius:12px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:#0e0e12; font-size:22px;"><i data-lucide="hexagon"></i></div>
+      <div>
+        <div style="font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-3); font-weight:600;">Phase 1 · Design &amp; Architecture</div>
+        <div style="font-size:24px; font-weight:800; letter-spacing:-.02em;">MERIDIAN — Web Shop</div>
+      </div>
+    </div>
+
+    <h1 style="font-size:46px; font-weight:800; letter-spacing:-.035em; line-height:1.05; margin:0 0 16px; max-width:760px;">A production-ready blueprint for an international Stripe web shop.</h1>
+    <p style="font-size:17px; line-height:1.6; color:var(--text-2); max-width:680px; margin:0 0 14px;">Laravel 12 REST API · React + Vite · MySQL · Stripe (USD/EUR) · Hostinger. Everything a coding-focused AI or developer needs to build Phases 2–10 — design, data model, API contract, flows, security and handoff.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:44px;">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+        <span class="mono" style="font-size:12px; padding:5px 11px; border-radius:999px; background:var(--surface); border:1px solid var(--border); color:var(--text-2);">{{ c }}</span>
+      </sc-for>
+    </div>
+
+    <div style="font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin-bottom:14px;">Hi-fi prototypes</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:36px;">
+      <sc-for list="{{ prototypes }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" class="card" style="display:block; border:1px solid var(--border); border-radius:16px; background:var(--surface); overflow:hidden; transition:border-color .15s;">
+          <div style="height:120px; background:{{ p.preview }}; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--border);"><i data-lucide="{{ p.icon }}" style="font-size:34px; color:rgba(255,255,255,.85);"></i></div>
+          <div style="padding:16px;">
+            <div style="font-weight:700; font-size:16px; margin-bottom:4px;">{{ p.title }}</div>
+            <div style="font-size:13px; color:var(--text-2); line-height:1.5;">{{ p.desc }}</div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin-bottom:14px;">Documentation</div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;">
+      <sc-for list="{{ docs }}" as="d" hint-placeholder-count="6">
+        <a href="{{ d.href }}" class="card" style="display:flex; align-items:center; gap:14px; border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:18px; transition:border-color .15s;">
+          <div style="width:42px; height:42px; flex-shrink:0; border-radius:11px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:19px;"><i data-lucide="{{ d.icon }}"></i></div>
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:15px;">{{ d.title }}</div>
+            <div style="font-size:13px; color:var(--text-2); margin-top:2px;">{{ d.desc }}</div>
+          </div>
+          <i data-lucide="{{ d.arrow }}" style="color:var(--text-3);"></i>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:44px; border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:22px;">
+      <div style="font-weight:700; font-size:15px; margin-bottom:14px; display:flex; align-items:center; gap:9px;"><i data-lucide="git-branch" style="color:var(--accent);"></i> Phased build plan</div>
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">
+        <sc-for list="{{ phases }}" as="ph" hint-placeholder-count="10">
+          <div style="display:flex; align-items:center; gap:11px; font-size:13.5px;">
+            <span class="mono" style="width:28px; height:24px; flex-shrink:0; border-radius:6px; background:{{ ph.bg }}; color:{{ ph.color }}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700;">{{ ph.n }}</span>
+            <span style="color:var(--text-2);">{{ ph.label }}</span>
+            <sc-if value="{{ ph.done }}" hint-placeholder-val=""><i data-lucide="check" style="color:var(--success); font-size:15px; margin-left:auto;"></i></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:14px; font-size:12.5px; color:var(--text-3); line-height:1.5;">This package covers <strong style="color:var(--text-2);">Phase 1</strong> in full. Phases 2–10 are implementation — hand these artifacts to a coding AI or developer to build against.</div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  componentDidMount(){ this.refreshIcons(); }
+  componentDidUpdate(){ this.refreshIcons(); }
+  refreshIcons(){ if(window.lucide){ try{ window.lucide.createIcons(); }catch(e){} } }
+  renderVals(){
+    const g = ['linear-gradient(135deg,#6b73ff,#3a2a6b)','linear-gradient(135deg,#1f9d63,#0e5e3a)','linear-gradient(135deg,#e0683a,#a8431f)'];
+    const phase = (n, label, done) => ({ n, label, done, bg: done?'var(--accent)':'var(--surface-2)', color: done?'#0e0e12':'var(--text-3)' });
+    return {
+      chips: ['Laravel 12','PHP 8.3','React + Vite','MySQL 8','Sanctum','Stripe Checkout','USD / EUR','Hostinger'],
+      prototypes: [
+        { title:'Storefront', desc:'Home, PLP, PDP, cart, checkout, success & customer dashboard. Light/dark, navigable.', href:'Storefront.dc.html', icon:'shopping-bag', preview:g[0] },
+        { title:'Admin Dashboard', desc:'Shopify-grade: sales, products, orders, customers, inventory, coupons, reports, settings, logs.', href:'Admin Dashboard.dc.html', icon:'layout-grid', preview:g[1] },
+        { title:'Design System', desc:'Color tokens, type scale, spacing, components & Lucide icons. Light/dark.', href:'Design System.dc.html', icon:'palette', preview:g[2] },
+      ],
+      docs: [
+        { title:'System Architecture', desc:'Stack, diagram, decisions, deployment, folders', href:'Architecture.dc.html', icon:'layers', arrow:'arrow-right' },
+        { title:'Database Design', desc:'ER diagram, schema, relationships, indexes', href:'Database.dc.html', icon:'database', arrow:'arrow-right' },
+        { title:'REST API Spec', desc:'All endpoints, auth, examples, status codes', href:'API Spec.dc.html', icon:'terminal', arrow:'arrow-right' },
+        { title:'Flows, Security & Handoff', desc:'User flows, security architecture, dev handoff', href:'Flows.dc.html', icon:'route', arrow:'arrow-right' },
+      ],
+      phases: [
+        phase('1','Design & architecture', true),
+        phase('2','Laravel backend', false),
+        phase('3','React frontend', false),
+        phase('4','Admin dashboard', false),
+        phase('5','Stripe + webhooks', false),
+        phase('6','Customer dashboard', false),
+        phase('7','Inventory management', false),
+        phase('8','Reports & analytics', false),
+        phase('9','Testing', false),
+        phase('10','Hostinger deploy', false),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

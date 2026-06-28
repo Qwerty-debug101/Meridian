@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family:'Schibsted Grotesk',system-ui,sans-serif; background:#f6f6f8; }
+  :root{ --bg:#f6f6f8; --surface:#fff; --surface-2:#f5f5f7; --surface-3:#efeff2; --border:#e7e7ec; --border-strong:#d6d6df; --text:#16161d; --text-2:#5b5b69; --text-3:#8c8c99; --accent:#5b5bf0; --accent-soft:#eeeefe; --success:#1f9d63; --success-soft:#e6f6ee; --warning:#c98a1a; --warning-soft:#fbf2df; --danger:#d6453d; --danger-soft:#fbeae9; --mono:'JetBrains Mono',monospace; }
+  [data-lucide]{ width:1em; height:1em; }
+  ::selection{ background:var(--accent-soft); }
+  .mono{ font-family:var(--mono); }
+</style>
+</helmet>
+<div style="background:var(--bg); color:var(--text); min-height:100vh;">
+  <div style="max-width:920px; margin:0 auto; padding:56px 40px 96px;">
+
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+      <a href="Index.dc.html" style="text-decoration:none; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-3); font-weight:600;"><i data-lucide="arrow-left"></i> Index</a>
+      <span style="color:var(--border-strong);">/</span>
+      <span style="font-size:13px; color:var(--text-3); font-weight:600;">Architecture</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:7px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:10px;"><i data-lucide="layers"></i> Document 01</div>
+    <h1 style="font-size:38px; font-weight:800; letter-spacing:-.03em; margin:0 0 12px;">System Architecture</h1>
+    <p style="font-size:17px; line-height:1.6; color:var(--text-2); max-width:680px; margin:0 0 40px;">How Meridian is structured: a decoupled Laravel REST API serving a React SPA, with Stripe as the sole payment rail. Designed to run on Hostinger shared hosting today and lift to a VPS without rewrites.</p>
+
+    <!-- STACK -->
+    <section style="margin-bottom:44px;">
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">Technology stack</h2>
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;">
+        <sc-for list="{{ stack }}" as="s" hint-placeholder-count="6">
+          <div style="border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:18px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+              <div style="width:34px; height:34px; border-radius:9px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center;"><i data-lucide="{{ s.icon }}"></i></div>
+              <div style="font-weight:700; font-size:15px;">{{ s.layer }}</div>
+            </div>
+            <div style="font-size:14px; color:var(--text-2); line-height:1.55;">{{ s.detail }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- DIAGRAM -->
+    <section style="margin-bottom:44px;">
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">High-level diagram</h2>
+      <div style="border:1px solid var(--border); border-radius:18px; background:var(--surface); padding:32px;">
+
+        <!-- clients row -->
+        <div style="display:flex; gap:14px; justify-content:center; margin-bottom:8px;">
+          <div style="flex:1; max-width:240px; border:1.5px solid var(--accent); border-radius:12px; padding:14px; text-align:center; background:var(--accent-soft);">
+            <i data-lucide="monitor" style="color:var(--accent); font-size:20px;"></i>
+            <div style="font-weight:700; font-size:14px; margin-top:6px;">Storefront SPA</div>
+            <div style="font-size:12px; color:var(--text-2);">React · Vite · Tailwind</div>
+          </div>
+          <div style="flex:1; max-width:240px; border:1.5px solid var(--accent); border-radius:12px; padding:14px; text-align:center; background:var(--accent-soft);">
+            <i data-lucide="layout-grid" style="color:var(--accent); font-size:20px;"></i>
+            <div style="font-weight:700; font-size:14px; margin-top:6px;">Admin SPA</div>
+            <div style="font-size:12px; color:var(--text-2);">React · RBAC-gated</div>
+          </div>
+        </div>
+        <div style="text-align:center; color:var(--text-3); padding:6px;"><i data-lucide="arrow-down"></i></div>
+        <div style="text-align:center; font-size:12px; color:var(--text-3); margin-bottom:6px;" class="mono">HTTPS · JSON · Sanctum token / cookie</div>
+
+        <!-- api gateway -->
+        <div style="border:1.5px solid var(--border-strong); border-radius:12px; padding:16px; background:var(--surface-2); margin-bottom:8px;">
+          <div style="text-align:center; font-weight:700; font-size:14px; margin-bottom:12px;">Laravel 12 REST API <span style="color:var(--text-3); font-weight:500;">· PHP 8.3</span></div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+            <sc-for list="{{ apiLayers }}" as="a" hint-placeholder-count="4">
+              <div style="border:1px solid var(--border); border-radius:9px; padding:9px; text-align:center; background:var(--surface); font-size:12px; font-weight:600;">{{ a }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="text-align:center; color:var(--text-3); padding:6px;"><i data-lucide="arrow-down"></i></div>
+
+        <!-- data + services row -->
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">
+          <sc-for list="{{ services }}" as="sv" hint-placeholder-count="4">
+            <div style="border:1.5px solid {{ sv.border }}; border-radius:12px; padding:13px; text-align:center; background:{{ sv.bg }};">
+              <i data-lucide="{{ sv.icon }}" style="color:{{ sv.color }}; font-size:19px;"></i>
+              <div style="font-weight:700; font-size:13px; margin-top:6px;">{{ sv.name }}</div>
+              <div style="font-size:11px; color:var(--text-2);">{{ sv.detail }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:18px; padding:12px 14px; border-radius:10px; background:#635bff; color:#fff; display:flex; align-items:center; gap:10px; font-size:13px;">
+          <i data-lucide="webhook"></i><span><strong>Stripe webhook</strong> → signed event → verify signature → create order → decrement inventory → queue confirmation email</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DECISIONS -->
+    <section style="margin-bottom:44px;">
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">Key decisions &amp; rationale</h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="6">
+          <div style="border:1px solid var(--border); border-radius:13px; background:var(--surface); padding:18px; display:flex; gap:14px;">
+            <div style="width:30px; height:30px; flex-shrink:0; border-radius:8px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center;"><i data-lucide="{{ d.icon }}" style="font-size:16px;"></i></div>
+            <div>
+              <div style="font-weight:700; font-size:15px; margin-bottom:4px;">{{ d.title }}</div>
+              <div style="font-size:14px; color:var(--text-2); line-height:1.55;">{{ d.body }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- HOSTING -->
+    <section style="margin-bottom:44px;">
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">Deployment — Hostinger</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:20px;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:12px;"><span style="padding:3px 9px; border-radius:7px; background:var(--success-soft); color:var(--success); font-size:12px; font-weight:700;">PHASE 1</span><span style="font-weight:700;">Shared hosting</span></div>
+          <ul style="margin:0; padding-left:18px; font-size:13.5px; color:var(--text-2); line-height:1.7;">
+            <li>Laravel deployed to <span class="mono">~/domains/site</span>; public_html → <span class="mono">/public</span></li>
+            <li>React built with <span class="mono">vite build</span>, static assets served from <span class="mono">/public</span></li>
+            <li>MySQL via hPanel; env secrets in <span class="mono">.env</span> (never committed)</li>
+            <li>Cron-driven <span class="mono">schedule:run</span> every minute for queues &amp; email</li>
+            <li>Domain &amp; DNS at Namecheap → A record to Hostinger; SSL via free Let's Encrypt</li>
+          </ul>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; background:var(--surface); padding:20px;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:12px;"><span style="padding:3px 9px; border-radius:7px; background:var(--accent-soft); color:var(--accent); font-size:12px; font-weight:700;">FUTURE</span><span style="font-weight:700;">VPS upgrade</span></div>
+          <ul style="margin:0; padding-left:18px; font-size:13.5px; color:var(--text-2); line-height:1.7;">
+            <li>Nginx + PHP-FPM 8.3; same codebase, no rewrites</li>
+            <li>Supervisor keeps <span class="mono">queue:work</span> running persistently</li>
+            <li>Redis for cache, sessions &amp; queues (swap drivers in <span class="mono">.env</span>)</li>
+            <li>Object storage / CDN for product images as catalog grows</li>
+            <li>Optional: read replica when query volume demands it</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:12px; padding:14px 16px; border-radius:12px; background:var(--warning-soft); border:1px solid color-mix(in srgb,var(--warning) 30%,transparent); display:flex; gap:11px; font-size:13.5px; color:var(--text); line-height:1.5;">
+        <i data-lucide="alert-triangle" style="color:var(--warning); flex-shrink:0; margin-top:2px;"></i><span><strong>Caveat:</strong> shared hosting has no persistent worker process — background email &amp; queues rely on the cron scheduler, which is fine at low volume. Plan the VPS jump once you exceed ~50 orders/day or want sub-minute email delivery.</span>
+      </div>
+    </section>
+
+    <!-- FOLDER STRUCTURE -->
+    <section>
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">Folder structure</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="border:1px solid var(--border); border-radius:14px; background:#16161d; padding:20px; overflow:auto;">
+          <div style="font-size:12px; color:#8c8c99; font-weight:700; margin-bottom:12px; letter-spacing:.05em;">BACKEND · Laravel</div>
+          <pre class="mono" style="margin:0; font-size:12px; line-height:1.7; color:#d6d6df; white-space:pre;">{{ backendTree }}</pre>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; background:#16161d; padding:20px; overflow:auto;">
+          <div style="font-size:12px; color:#8c8c99; font-weight:700; margin-bottom:12px; letter-spacing:.05em;">FRONTEND · React + Vite</div>
+          <pre class="mono" style="margin:0; font-size:12px; line-height:1.7; color:#d6d6df; white-space:pre;">{{ frontendTree }}</pre>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  componentDidMount(){ this.refreshIcons(); }
+  componentDidUpdate(){ this.refreshIcons(); }
+  refreshIcons(){ if(window.lucide){ try{ window.lucide.createIcons(); }catch(e){} } }
+  renderVals(){
+    return {
+      stack: [
+        { layer:'Backend', icon:'server', detail:'Laravel 12 on PHP 8.3+. REST API, Eloquent ORM, Form Requests for validation, Policies for authorization, Queues for email.' },
+        { layer:'Frontend', icon:'monitor', detail:'React 18 + Vite + TypeScript. Tailwind CSS for styling, React Router, TanStack Query for server state & caching.' },
+        { layer:'Database', icon:'database', detail:'MySQL 8. Normalized schema, foreign keys, indexed lookups. Eloquent migrations as the single source of truth.' },
+        { layer:'Auth', icon:'key-round', detail:'Laravel Sanctum — SPA cookie auth for first-party storefront/admin, personal access tokens for any future API clients.' },
+        { layer:'Payments', icon:'credit-card', detail:'Stripe Checkout (hosted) + signed webhooks. USD & EUR only. Refunds via Stripe API. No card data ever touches the server.' },
+        { layer:'Infra', icon:'cloud', detail:'Hostinger shared hosting → VPS path. Namecheap DNS. Let\u2019s Encrypt SSL. No Docker / K8s / cloud lock-in.' },
+      ],
+      apiLayers: ['Routes / Middleware', 'Controllers', 'Form Requests', 'Policies / Gates'],
+      services: [
+        { name:'MySQL 8', detail:'Primary store', icon:'database', border:'var(--border-strong)', bg:'var(--surface)', color:'var(--text-2)' },
+        { name:'File storage', detail:'Product images', icon:'image', border:'var(--border-strong)', bg:'var(--surface)', color:'var(--text-2)' },
+        { name:'Mail (SMTP)', detail:'Notifications', icon:'mail', border:'var(--border-strong)', bg:'var(--surface)', color:'var(--text-2)' },
+        { name:'Stripe API', detail:'Payments', icon:'credit-card', border:'#635bff', bg:'#eeeefe', color:'#635bff' },
+      ],
+      decisions: [
+        { icon:'unplug', title:'Decoupled SPA + REST API, not a Blade monolith', body:'A clean API boundary lets the React storefront and admin evolve independently, makes a future mobile app trivial, and keeps the backend a single testable contract. Costs a little more setup; pays off in maintainability.' },
+        { icon:'key-round', title:'Sanctum over raw JWT', body:'Sanctum gives first-party SPA cookie auth with CSRF protection out of the box — simpler and safer than hand-rolling JWT refresh logic. Token abilities cover the RBAC roles (Super Admin / Admin / Staff).' },
+        { icon:'credit-card', title:'Stripe Checkout (hosted), not custom Elements', body:'Hosted Checkout keeps the site out of PCI-DSS scope entirely — card data never reaches Laravel. The order is created only after the signed webhook fires, so a closed browser tab can never lose a paid order.' },
+        { icon:'webhook', title:'Webhook-driven order creation', body:'Inventory is decremented and the order row written when Stripe confirms payment server-to-server, not on the client redirect. This is the single most important correctness decision in the system.' },
+        { icon:'coins', title:'Money stored as integer minor units', body:'All amounts persisted as integer cents/eurocents with an explicit currency column — never floats. Avoids rounding drift across USD/EUR and matches how Stripe represents amounts.' },
+        { icon:'database', title:'MySQL with disciplined indexing', body:'Foreign keys everywhere, composite indexes on hot query paths (orders by customer+date, products by category+status). Eager-loading conventions documented to prevent N+1 queries.' },
+      ],
+      backendTree: `app/
+├─ Http/
+│  ├─ Controllers/Api/
+│  ├─ Requests/        # validation
+│  ├─ Resources/       # JSON shaping
+│  └─ Middleware/
+├─ Models/
+├─ Policies/           # RBAC
+├─ Services/           # Stripe, Inventory
+├─ Jobs/               # queued email
+└─ Observers/          # audit logs
+database/
+├─ migrations/
+├─ seeders/
+└─ factories/
+routes/
+├─ api.php
+└─ web.php
+tests/
+├─ Feature/
+└─ Unit/`,
+      frontendTree: `src/
+├─ api/               # axios + TanStack Query
+├─ components/
+│  ├─ ui/             # design-system
+│  └─ commerce/
+├─ features/
+│  ├─ catalog/
+│  ├─ cart/
+│  ├─ checkout/
+│  └─ account/
+├─ admin/             # admin SPA
+│  ├─ pages/
+│  └─ widgets/
+├─ hooks/
+├─ lib/               # utils, money
+├─ routes/
+└─ styles/
+public/
+vite.config.ts
+tailwind.config.js`,
+    };
+  }
+}
+</script>
+</body>
+</html>

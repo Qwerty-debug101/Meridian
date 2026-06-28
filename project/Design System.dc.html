@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: 'Schibsted Grotesk', system-ui, sans-serif; }
+  [data-theme="light"] {
+    --bg:#fbfbfc; --surface:#fff; --surface-2:#f5f5f7; --surface-3:#efeff2;
+    --border:#e7e7ec; --border-strong:#d6d6df;
+    --text:#16161d; --text-2:#5b5b69; --text-3:#8c8c99;
+    --accent:#5b5bf0; --accent-hover:#4a4ad6; --accent-soft:#eeeefe; --accent-fg:#fff;
+    --success:#1f9d63; --success-soft:#e6f6ee; --warning:#c98a1a; --warning-soft:#fbf2df;
+    --danger:#d6453d; --danger-soft:#fbeae9;
+    --shadow-sm:0 1px 2px rgba(20,20,29,.06),0 1px 1px rgba(20,20,29,.04);
+    --shadow-md:0 4px 16px rgba(20,20,29,.08),0 1px 3px rgba(20,20,29,.05);
+    --shadow-lg:0 12px 40px rgba(20,20,29,.12),0 2px 8px rgba(20,20,29,.06);
+  }
+  [data-theme="dark"] {
+    --bg:#0e0e12; --surface:#17171d; --surface-2:#1e1e26; --surface-3:#25252f;
+    --border:#2a2a34; --border-strong:#3a3a47;
+    --text:#f4f4f7; --text-2:#a6a6b4; --text-3:#6f6f7e;
+    --accent:#7d7dff; --accent-hover:#9292ff; --accent-soft:#1d1d3a; --accent-fg:#0e0e12;
+    --success:#34c585; --success-soft:#11271d; --warning:#e0a13a; --warning-soft:#2a2110;
+    --danger:#f0635a; --danger-soft:#2c1513;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    --shadow-md:0 4px 16px rgba(0,0,0,.5);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.6);
+  }
+  [data-lucide]{ width:1em; height:1em; }
+  ::selection{ background:var(--accent-soft); }
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="min-height:100vh; background:var(--bg); color:var(--text); transition:background .2s ease;">
+  <div style="max-width:1080px; margin:0 auto; padding:0 32px;">
+
+    <header style="display:flex; align-items:center; justify-content:space-between; padding:40px 0 28px; border-bottom:1px solid var(--border);">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="width:38px; height:38px; border-radius:10px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:var(--accent-fg); font-size:20px;"><i data-lucide="hexagon"></i></div>
+        <div>
+          <div style="font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); font-weight:600;">Meridian — Phase 1</div>
+          <div style="font-size:22px; font-weight:700; letter-spacing:-.02em;">Design System</div>
+        </div>
+      </div>
+      <button onClick="{{ toggleTheme }}" style="display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; box-shadow:var(--shadow-sm);">
+        <i data-lucide="{{ themeIcon }}"></i><span>{{ themeLabel }}</span>
+      </button>
+    </header>
+
+    <div style="padding:36px 0 80px;">
+
+      <section style="margin-bottom:56px;">
+        <h1 style="font-size:40px; font-weight:800; letter-spacing:-.03em; margin:0 0 12px; max-width:680px; line-height:1.08;">A calm, premium foundation for international commerce.</h1>
+        <p style="font-size:17px; line-height:1.6; color:var(--text-2); max-width:620px; margin:0;">Shared tokens, type and components across storefront and admin. Cool-neutral surfaces, a single indigo accent, and a 4px spacing grid keep the interface quiet so products and data stay loud.</p>
+      </section>
+
+      <!-- COLORS -->
+      <section style="margin-bottom:52px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <i data-lucide="palette" style="color:var(--accent);"></i>
+          <h2 style="font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0;">Color tokens</h2>
+        </div>
+        <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:10px;">Surfaces &amp; text</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(132px,1fr)); gap:10px; margin-bottom:24px;">
+          <sc-for list="{{ surfaceSwatches }}" as="sw" hint-placeholder-count="6">
+            <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--surface);">
+              <div style="height:60px; background:{{ sw.value }}; border-bottom:1px solid var(--border);"></div>
+              <div style="padding:10px 12px;">
+                <div style="font-size:13px; font-weight:600;">{{ sw.name }}</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-3); margin-top:2px;">{{ sw.token }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:10px;">Accent &amp; semantic</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(132px,1fr)); gap:10px;">
+          <sc-for list="{{ accentSwatches }}" as="sw" hint-placeholder-count="5">
+            <div style="border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--surface);">
+              <div style="height:60px; background:{{ sw.value }};"></div>
+              <div style="padding:10px 12px;">
+                <div style="font-size:13px; font-weight:600;">{{ sw.name }}</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-3); margin-top:2px;">{{ sw.token }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- TYPE -->
+      <section style="margin-bottom:52px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <i data-lucide="type" style="color:var(--accent);"></i>
+          <h2 style="font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0;">Typography</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+          <div style="border:1px solid var(--border); border-radius:14px; padding:18px; background:var(--surface);">
+            <div style="font-size:12px; color:var(--text-3); font-weight:600; margin-bottom:6px;">DISPLAY / UI</div>
+            <div style="font-size:30px; font-weight:700; letter-spacing:-.02em;">Schibsted Grotesk</div>
+            <div style="color:var(--text-2); font-size:13px; margin-top:6px;">Headlines, UI labels, body. Weights 400–800.</div>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:14px; padding:18px; background:var(--surface);">
+            <div style="font-size:12px; color:var(--text-3); font-weight:600; margin-bottom:6px;">MONO / TECHNICAL</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600;">JetBrains Mono</div>
+            <div style="color:var(--text-2); font-size:13px; margin-top:6px;">SKUs, prices, order IDs, code, API.</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; padding:8px 20px; background:var(--surface);">
+          <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="6">
+            <div style="display:flex; align-items:baseline; gap:18px; padding:12px 0; border-bottom:1px solid var(--border);">
+              <div style="width:120px; flex-shrink:0; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-3);">{{ t.meta }}</div>
+              <div style="font-size:{{ t.px }}; font-weight:{{ t.weight }}; letter-spacing:-.02em; line-height:1.1;">{{ t.label }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- SPACING + RADIUS -->
+      <section style="margin-bottom:52px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <i data-lucide="ruler" style="color:var(--accent);"></i>
+          <h2 style="font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0;">Spacing &amp; radius</h2>
+        </div>
+        <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:14px;">
+          <div style="border:1px solid var(--border); border-radius:14px; padding:20px; background:var(--surface);">
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:14px;">4px base grid</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="6">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div style="width:54px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-3);">{{ s.name }}</div>
+                  <div style="height:14px; width:{{ s.px }}; background:var(--accent); border-radius:3px;"></div>
+                  <div style="font-size:12px; color:var(--text-3);">{{ s.px }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:14px; padding:20px; background:var(--surface);">
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:14px;">Radius</div>
+            <div style="display:flex; flex-wrap:wrap; gap:14px;">
+              <sc-for list="{{ radii }}" as="r" hint-placeholder-count="4">
+                <div style="text-align:center;">
+                  <div style="width:58px; height:58px; background:var(--surface-2); border:1px solid var(--border-strong); border-top-left-radius:{{ r.px }}; border-top-right-radius:{{ r.px }};"></div>
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-3); margin-top:6px;">{{ r.px }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin:20px 0 12px;">Elevation</div>
+            <div style="display:flex; gap:14px;">
+              <div style="width:60px; height:46px; border-radius:10px; background:var(--surface); box-shadow:var(--shadow-sm);"></div>
+              <div style="width:60px; height:46px; border-radius:10px; background:var(--surface); box-shadow:var(--shadow-md);"></div>
+              <div style="width:60px; height:46px; border-radius:10px; background:var(--surface); box-shadow:var(--shadow-lg);"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPONENTS -->
+      <section style="margin-bottom:52px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <i data-lucide="component" style="color:var(--accent);"></i>
+          <h2 style="font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0;">Components</h2>
+        </div>
+
+        <div style="border:1px solid var(--border); border-radius:14px; padding:24px; background:var(--surface); margin-bottom:14px;">
+          <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:14px;">Buttons</div>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px;">
+            <button style="padding:10px 18px; border-radius:10px; border:none; background:var(--accent); color:var(--accent-fg); font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; box-shadow:var(--shadow-sm);">Primary</button>
+            <button style="padding:10px 18px; border-radius:10px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;">Secondary</button>
+            <button style="padding:10px 18px; border-radius:10px; border:none; background:transparent; color:var(--text-2); font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;">Ghost</button>
+            <button style="padding:10px 18px; border-radius:10px; border:none; background:var(--danger); color:#fff; font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;">Danger</button>
+            <button style="display:flex; align-items:center; gap:7px; padding:10px 18px; border-radius:10px; border:none; background:var(--accent); color:var(--accent-fg); font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;"><i data-lucide="plus"></i>With icon</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div style="border:1px solid var(--border); border-radius:14px; padding:24px; background:var(--surface);">
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:14px;">Badges &amp; status</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:999px; background:var(--success-soft); color:var(--success); font-size:12px; font-weight:600;"><span style="width:6px;height:6px;border-radius:99px;background:var(--success);"></span>Paid</span>
+              <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:999px; background:var(--warning-soft); color:var(--warning); font-size:12px; font-weight:600;"><span style="width:6px;height:6px;border-radius:99px;background:var(--warning);"></span>Pending</span>
+              <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:999px; background:var(--danger-soft); color:var(--danger); font-size:12px; font-weight:600;"><span style="width:6px;height:6px;border-radius:99px;background:var(--danger);"></span>Refunded</span>
+              <span style="display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-size:12px; font-weight:600;">Fulfilled</span>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:14px; padding:24px; background:var(--surface);">
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:14px;">Inputs</div>
+            <div style="position:relative; margin-bottom:10px;">
+              <i data-lucide="search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-3);"></i>
+              <input placeholder="Search products…" style="width:100%; padding:10px 12px 10px 36px; border-radius:10px; border:1px solid var(--border-strong); background:var(--surface-2); color:var(--text); font-family:inherit; font-size:14px;">
+            </div>
+            <select style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border-strong); background:var(--surface-2); color:var(--text); font-family:inherit; font-size:14px;"><option>Category: All</option></select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="border:1px solid var(--border); border-radius:14px; overflow:hidden; background:var(--surface); box-shadow:var(--shadow-sm);">
+            <div style="height:120px; background:linear-gradient(135deg,var(--surface-3),var(--surface-2)); display:flex; align-items:center; justify-content:center; color:var(--text-3);"><i data-lucide="image" style="font-size:28px;"></i></div>
+            <div style="padding:14px;">
+              <div style="font-size:12px; color:var(--text-3); margin-bottom:3px;">Audio</div>
+              <div style="font-weight:600; margin-bottom:6px;">Product card</div>
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-family:'JetBrains Mono',monospace; font-weight:600;">$129.00</span>
+                <button style="width:34px; height:34px; border-radius:9px; border:none; background:var(--accent); color:var(--accent-fg); display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="shopping-bag"></i></button>
+              </div>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:14px; padding:18px; background:var(--surface); box-shadow:var(--shadow-sm);">
+            <div style="font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Metric card</div>
+            <div style="font-size:30px; font-weight:800; letter-spacing:-.02em;">$48,290</div>
+            <div style="display:flex; align-items:center; gap:5px; color:var(--success); font-size:13px; font-weight:600; margin-top:4px;"><i data-lucide="trending-up"></i> +12.4% vs last week</div>
+            <div style="margin-top:14px; height:46px; display:flex; align-items:flex-end; gap:4px;">
+              <sc-for list="{{ bars }}" as="b" hint-placeholder-count="12">
+                <div style="flex:1; background:var(--accent-soft); border-radius:3px 3px 0 0; height:{{ b.h }};"></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ICONS -->
+      <section>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
+          <i data-lucide="sparkles" style="color:var(--accent);"></i>
+          <h2 style="font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0;">Iconography — Lucide</h2>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; padding:24px; background:var(--surface); display:grid; grid-template-columns:repeat(auto-fill,minmax(76px,1fr)); gap:14px;">
+          <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="14">
+            <div style="display:flex; flex-direction:column; align-items:center; gap:7px; color:var(--text-2);">
+              <i data-lucide="{{ ic }}" style="font-size:22px;"></i>
+              <span style="font-size:10px; color:var(--text-3); font-family:'JetBrains Mono',monospace;">{{ ic }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="font-size:13px; color:var(--text-3); margin:14px 0 0;">Line icons at 1.5–2px stroke. Consistent 24px grid; never mix icon families.</p>
+      </section>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { theme: 'light' };
+
+  componentDidMount() { this.refreshIcons(); }
+  componentDidUpdate() { this.refreshIcons(); }
+  refreshIcons() {
+    if (window.lucide) { try { window.lucide.createIcons(); } catch(e){} }
+  }
+
+  renderVals() {
+    const theme = this.state.theme;
+    return {
+      theme,
+      themeLabel: theme === 'light' ? 'Dark' : 'Light',
+      themeIcon: theme === 'light' ? 'moon' : 'sun',
+      toggleTheme: () => this.setState(s => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
+      surfaceSwatches: [
+        { name: 'Background', token: '--bg', value: 'var(--bg)' },
+        { name: 'Surface', token: '--surface', value: 'var(--surface)' },
+        { name: 'Surface 2', token: '--surface-2', value: 'var(--surface-2)' },
+        { name: 'Surface 3', token: '--surface-3', value: 'var(--surface-3)' },
+        { name: 'Border', token: '--border', value: 'var(--border)' },
+        { name: 'Text', token: '--text', value: 'var(--text)' },
+      ],
+      accentSwatches: [
+        { name: 'Accent', token: '--accent', value: 'var(--accent)' },
+        { name: 'Accent soft', token: '--accent-soft', value: 'var(--accent-soft)' },
+        { name: 'Success', token: '--success', value: 'var(--success)' },
+        { name: 'Warning', token: '--warning', value: 'var(--warning)' },
+        { name: 'Danger', token: '--danger', value: 'var(--danger)' },
+      ],
+      typeScale: [
+        { meta: 'Display / 40 / 800', px: '40px', weight: 800, label: 'Display headline' },
+        { meta: 'H1 / 30 / 700', px: '30px', weight: 700, label: 'Page heading' },
+        { meta: 'H2 / 22 / 700', px: '22px', weight: 700, label: 'Section title' },
+        { meta: 'Body / 16 / 400', px: '16px', weight: 400, label: 'Body copy — comfortable reading line height of 1.6' },
+        { meta: 'Small / 13 / 500', px: '13px', weight: 500, label: 'Labels, captions, metadata' },
+        { meta: 'Micro / 11 / 600', px: '11px', weight: 600, label: 'OVERLINE / UPPERCASE' },
+      ],
+      spacing: [
+        { name: 'space-1', px: '4px' }, { name: 'space-2', px: '8px' },
+        { name: 'space-3', px: '12px' }, { name: 'space-4', px: '16px' },
+        { name: 'space-6', px: '24px' }, { name: 'space-8', px: '32px' },
+      ],
+      radii: [ { px: '8px' }, { px: '12px' }, { px: '16px' }, { px: '999px' } ],
+      bars: [40,55,48,62,58,70,65,80,72,88,84,96].map(h => ({ h: h + '%' })),
+      icons: ['home','shopping-bag','heart','search','user','package','tag','truck','credit-card','bar-chart-3','settings','bell','star','filter','layout-grid','box','users','percent','file-text','shield-check'],
+    };
+  }
+}
+</script>
+</body>
+</html>

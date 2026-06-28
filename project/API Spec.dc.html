@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { font-family:'Schibsted Grotesk',system-ui,sans-serif; background:#f6f6f8; }
+  :root{ --bg:#f6f6f8; --surface:#fff; --surface-2:#f5f5f7; --surface-3:#efeff2; --border:#e7e7ec; --border-strong:#d6d6df; --text:#16161d; --text-2:#5b5b69; --text-3:#8c8c99; --accent:#5b5bf0; --accent-soft:#eeeefe; --get:#1f9d63; --get-bg:#e6f6ee; --post:#5b5bf0; --post-bg:#eeeefe; --put:#c98a1a; --put-bg:#fbf2df; --del:#d6453d; --del-bg:#fbeae9; --mono:'JetBrains Mono',monospace; }
+  [data-lucide]{ width:1em; height:1em; }
+  ::selection{ background:var(--accent-soft); }
+  .mono{ font-family:var(--mono); }
+</style>
+</helmet>
+<div style="background:var(--bg); color:var(--text); min-height:100vh;">
+  <div style="max-width:960px; margin:0 auto; padding:56px 40px 96px;">
+
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+      <a href="Index.dc.html" style="text-decoration:none; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-3); font-weight:600;"><i data-lucide="arrow-left"></i> Index</a>
+      <span style="color:var(--border-strong);">/</span><span style="font-size:13px; color:var(--text-3); font-weight:600;">API</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:7px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:10px;"><i data-lucide="terminal"></i> Document 03</div>
+    <h1 style="font-size:38px; font-weight:800; letter-spacing:-.03em; margin:0 0 12px;">REST API Specification</h1>
+    <p style="font-size:17px; line-height:1.6; color:var(--text-2); max-width:700px; margin:0 0 28px;">Versioned JSON API under <span class="mono" style="background:var(--surface-3); padding:1px 6px; border-radius:5px;">/api/v1</span>. Auth via Laravel Sanctum. All money is integer minor units with an explicit currency. Standard pagination, validation (422) and rate limiting throughout.</p>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px;">
+      <sc-for list="{{ conventions }}" as="c" hint-placeholder-count="4">
+        <div style="display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:10px; background:var(--surface); font-size:13px;">
+          <i data-lucide="{{ c.icon }}" style="color:var(--accent); font-size:16px;"></i><span style="color:var(--text-2);">{{ c.text }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <section style="display:flex; flex-direction:column; gap:28px;">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="8">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <div style="width:32px; height:32px; border-radius:9px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center;"><i data-lucide="{{ g.icon }}" style="font-size:17px;"></i></div>
+            <h2 style="font-size:19px; font-weight:700; letter-spacing:-.01em; margin:0;">{{ g.title }}</h2>
+            <span style="font-size:13px; color:var(--text-3);">{{ g.note }}</span>
+          </div>
+          <div style="border:1px solid var(--border); border-radius:14px; background:var(--surface); overflow:hidden;">
+            <sc-for list="{{ g.endpoints }}" as="e" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:14px; padding:12px 18px; border-top:1px solid var(--border);">
+                <span class="mono" style="flex-shrink:0; width:58px; text-align:center; padding:4px 0; border-radius:7px; font-size:11px; font-weight:700; background:{{ e.bg }}; color:{{ e.color }};">{{ e.method }}</span>
+                <span class="mono" style="font-size:13px; font-weight:600; flex-shrink:0;">{{ e.path }}</span>
+                <span style="font-size:13px; color:var(--text-2); flex:1;">{{ e.desc }}</span>
+                <sc-if value="{{ e.auth }}" hint-placeholder-val="">
+                  <span style="flex-shrink:0; display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text-3); font-weight:600;"><i data-lucide="lock" style="font-size:12px;"></i>{{ e.authLabel }}</span>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <!-- SAMPLE -->
+    <section style="margin-top:40px;">
+      <h2 style="font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); font-weight:700; margin:0 0 16px;">Example — create checkout session</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="border:1px solid var(--border); border-radius:14px; background:#16161d; padding:18px; overflow:auto;">
+          <div style="font-size:11px; color:#8c8c99; font-weight:700; margin-bottom:10px; letter-spacing:.05em;">REQUEST</div>
+          <pre class="mono" style="margin:0; font-size:12px; line-height:1.65; color:#d6d6df; white-space:pre;">{{ reqSample }}</pre>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:14px; background:#16161d; padding:18px; overflow:auto;">
+          <div style="font-size:11px; color:#8c8c99; font-weight:700; margin-bottom:10px; letter-spacing:.05em;">RESPONSE · 201</div>
+          <pre class="mono" style="margin:0; font-size:12px; line-height:1.65; color:#d6d6df; white-space:pre;">{{ resSample }}</pre>
+        </div>
+      </div>
+      <div style="margin-top:14px; border:1px solid var(--border); border-radius:14px; background:var(--surface); overflow:hidden;">
+        <div style="padding:13px 18px; font-weight:700; font-size:14px; border-bottom:1px solid var(--border);">Status codes &amp; errors</div>
+        <table style="width:100%; border-collapse:collapse; font-size:13px;">
+          <tbody>
+            <sc-for list="{{ statusCodes }}" as="s" hint-placeholder-count="6">
+              <tr style="border-top:1px solid var(--border);">
+                <td class="mono" style="padding:9px 18px; font-weight:700; color:{{ s.color }}; width:90px;">{{ s.code }}</td>
+                <td style="padding:9px 18px; color:var(--text-2);">{{ s.meaning }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  componentDidMount(){ this.refreshIcons(); }
+  componentDidUpdate(){ this.refreshIcons(); }
+  refreshIcons(){ if(window.lucide){ try{ window.lucide.createIcons(); }catch(e){} } }
+  renderVals(){
+    const M = { GET:{bg:'var(--get-bg)',color:'var(--get)'}, POST:{bg:'var(--post-bg)',color:'var(--post)'}, PUT:{bg:'var(--put-bg)',color:'var(--put)'}, PATCH:{bg:'var(--put-bg)',color:'var(--put)'}, DELETE:{bg:'var(--del-bg)',color:'var(--del)'} };
+    const ep = (method, path, desc, authLabel) => ({ method, path, desc, ...M[method], auth: !!authLabel, authLabel: authLabel||'' });
+    return {
+      conventions: [
+        { icon:'globe', text:'Base: /api/v1' },
+        { icon:'braces', text:'JSON request & response' },
+        { icon:'key-round', text:'Sanctum: Bearer token / SPA cookie' },
+        { icon:'list-ordered', text:'?page= &per_page= pagination' },
+        { icon:'shield', text:'Rate limited: 60/min public, 120/min auth' },
+        { icon:'coins', text:'Money: integer minor units + currency' },
+      ],
+      groups: [
+        { title:'Authentication', icon:'key-round', note:'Sanctum', endpoints:[
+          ep('POST','/auth/register','Create customer account + send verification email'),
+          ep('POST','/auth/login','Issue session / token'),
+          ep('POST','/auth/logout','Revoke current token','auth'),
+          ep('POST','/auth/forgot-password','Send reset link'),
+          ep('POST','/auth/reset-password','Set new password from token'),
+          ep('POST','/auth/email/verify','Confirm email address'),
+          ep('GET','/auth/me','Current user + role','auth'),
+        ]},
+        { title:'Products', icon:'package', note:'public catalog', endpoints:[
+          ep('GET','/products','List with filters: ?category=&search=&min=&max=&sort='),
+          ep('GET','/products/{slug}','Single product + variants, images, reviews'),
+          ep('GET','/products/{slug}/related','Related products'),
+          ep('GET','/products/featured','Homepage featured set'),
+          ep('POST','/admin/products','Create product','admin'),
+          ep('PUT','/admin/products/{id}','Update product','admin'),
+          ep('DELETE','/admin/products/{id}','Archive product','admin'),
+          ep('POST','/admin/products/{id}/images','Upload images (validated)','admin'),
+        ]},
+        { title:'Categories', icon:'folder-tree', note:'', endpoints:[
+          ep('GET','/categories','Category tree'),
+          ep('GET','/categories/{slug}/products','Products in category'),
+          ep('POST','/admin/categories','Create','admin'),
+          ep('PUT','/admin/categories/{id}','Update','admin'),
+        ]},
+        { title:'Cart', icon:'shopping-cart', note:'session or customer', endpoints:[
+          ep('GET','/cart','Get current cart'),
+          ep('POST','/cart/items','Add variant + qty'),
+          ep('PATCH','/cart/items/{id}','Update quantity'),
+          ep('DELETE','/cart/items/{id}','Remove line'),
+          ep('POST','/cart/coupon','Apply coupon code'),
+          ep('POST','/cart/shipping/estimate','Shipping calculator by destination'),
+        ]},
+        { title:'Checkout & Payments', icon:'credit-card', note:'Stripe', endpoints:[
+          ep('POST','/checkout/session','Create Stripe Checkout session → returns redirect URL','auth'),
+          ep('POST','/webhooks/stripe','Stripe → verify signature, create order, decrement stock'),
+          ep('GET','/checkout/{session}/status','Poll session result'),
+          ep('POST','/admin/orders/{id}/refund','Issue full / partial refund via Stripe','admin'),
+        ]},
+        { title:'Orders', icon:'shopping-bag', note:'', endpoints:[
+          ep('GET','/orders','Customer order history','auth'),
+          ep('GET','/orders/{number}','Single order + tracking','auth'),
+          ep('GET','/admin/orders','All orders, filterable','admin'),
+          ep('PATCH','/admin/orders/{id}/fulfill','Mark fulfilled + tracking number','staff'),
+        ]},
+        { title:'Customers', icon:'users', note:'', endpoints:[
+          ep('GET','/account/profile','Profile','auth'),
+          ep('PUT','/account/profile','Update profile','auth'),
+          ep('GET','/account/addresses','Saved addresses','auth'),
+          ep('POST','/account/addresses','Add address','auth'),
+          ep('GET','/admin/customers','List customers + LTV','admin'),
+        ]},
+        { title:'Inventory', icon:'box', note:'admin', endpoints:[
+          ep('GET','/admin/inventory','Stock levels + low-stock flags','admin'),
+          ep('POST','/admin/inventory/{id}/adjust','Manual adjustment (logged)','admin'),
+          ep('GET','/admin/suppliers','Suppliers list','admin'),
+          ep('POST','/admin/purchase-orders','Create PO','admin'),
+        ]},
+        { title:'Reviews & Wishlist', icon:'star', note:'', endpoints:[
+          ep('GET','/products/{slug}/reviews','Paginated reviews'),
+          ep('POST','/products/{slug}/reviews','Submit review (verified purchase)','auth'),
+          ep('GET','/wishlist','Customer wishlist','auth'),
+          ep('POST','/wishlist','Add product','auth'),
+          ep('DELETE','/wishlist/{productId}','Remove','auth'),
+        ]},
+        { title:'Coupons & Discounts', icon:'percent', note:'admin', endpoints:[
+          ep('GET','/admin/coupons','List','admin'),
+          ep('POST','/admin/coupons','Create code','admin'),
+          ep('PUT','/admin/coupons/{id}','Update / deactivate','admin'),
+          ep('GET','/admin/reports/sales','Sales analytics','admin'),
+          ep('GET','/admin/activity-logs','Audit log','admin'),
+        ]},
+      ],
+      reqSample: `POST /api/v1/checkout/session
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "cart_id": 8841,
+  "currency": "EUR",
+  "shipping_method": "standard",
+  "shipping_address_id": 312,
+  "coupon_code": "WELCOME10"
+}`,
+      resSample: `{
+  "data": {
+    "session_id": "cs_test_a1B2c3",
+    "checkout_url":
+      "https://checkout.stripe.com/c/pay/cs_test_a1B2c3",
+    "amount_total": 24720,
+    "currency": "EUR",
+    "expires_at": "2025-05-08T12:30:00Z"
+  }
+}`,
+      statusCodes: [
+        { code:'200', meaning:'OK — request succeeded', color:'var(--get)' },
+        { code:'201', meaning:'Created — resource created', color:'var(--get)' },
+        { code:'401', meaning:'Unauthenticated — missing / invalid token', color:'var(--put)' },
+        { code:'403', meaning:'Forbidden — role lacks permission (RBAC)', color:'var(--put)' },
+        { code:'404', meaning:'Not found', color:'var(--put)' },
+        { code:'422', meaning:'Validation failed — { errors: { field: [msg] } }', color:'var(--del)' },
+        { code:'429', meaning:'Too many requests — rate limited', color:'var(--del)' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
