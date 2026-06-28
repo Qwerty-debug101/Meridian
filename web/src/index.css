@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  [data-theme="light"] {
+    --bg: #fbfbfc;
+    --surface: #ffffff;
+    --surface-2: #f5f5f7;
+    --surface-3: #efeff2;
+    --border: #e7e7ec;
+    --border-strong: #d6d6df;
+    --text: #16161d;
+    --text-2: #5b5b69;
+    --text-3: #8c8c99;
+    --accent: #5b5bf0;
+    --accent-hover: #4a4ad6;
+    --accent-soft: #eeeefe;
+    --accent-fg: #ffffff;
+    --success: #1f9d63;
+    --success-soft: #e6f6ee;
+    --warning: #c98a1a;
+    --warning-soft: #fbf2df;
+    --danger: #d6453d;
+    --danger-soft: #fbeae9;
+    --shadow-sm: 0 1px 2px rgba(20,20,29,.06), 0 1px 1px rgba(20,20,29,.04);
+    --shadow-md: 0 4px 16px rgba(20,20,29,.08), 0 1px 3px rgba(20,20,29,.05);
+    --shadow-lg: 0 12px 40px rgba(20,20,29,.12), 0 2px 8px rgba(20,20,29,.06);
+    --nav-bg: #16161d;
+    --nav-text: #a6a6b4;
+    --nav-active: #2a2a34;
+  }
+
+  [data-theme="dark"] {
+    --bg: #0e0e12;
+    --surface: #17171d;
+    --surface-2: #1e1e26;
+    --surface-3: #25252f;
+    --border: #2a2a34;
+    --border-strong: #3a3a47;
+    --text: #f4f4f7;
+    --text-2: #a6a6b4;
+    --text-3: #6f6f7e;
+    --accent: #7d7dff;
+    --accent-hover: #9292ff;
+    --accent-soft: #1d1d3a;
+    --accent-fg: #0e0e12;
+    --success: #34c585;
+    --success-soft: #11271d;
+    --warning: #e0a13a;
+    --warning-soft: #2a2110;
+    --danger: #f0635a;
+    --danger-soft: #2c1513;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.5);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,.6);
+    --nav-bg: #101015;
+    --nav-text: #8c8c99;
+    --nav-active: #22222b;
+  }
+
+  body {
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  ::selection { background: var(--accent-soft); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+}
